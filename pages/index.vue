@@ -12,8 +12,6 @@
       <MovieComponent v-if="searchInput !== ''" :movies="searchedMovies" />
       <MovieComponent v-else :movies="movies" />
     </div>
-
-
   </div>
 </template>
 
@@ -30,6 +28,7 @@ export default {
       searchInput: ''
     }
   },
+
   async fetch() {
     if (this.searchInput === '') {
       await this.getMovie()
@@ -38,6 +37,23 @@ export default {
     await this.getSearchedMovie()
   },
   fetchDelay: 1000,
+  head() {
+    return {
+      title: 'Movie App - Latest Streaming Movie Info',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Get all the latest streaming movies in theaters & online',
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: 'movies, stream, streaming',
+        },
+      ],
+    }
+  },
   methods: {
     async getMovie() {
       const response = await axios.get("https://api.themoviedb.org/3/movie/now_playing?api_key=2d092c05b6df26808e64c2b3859bdd49&language=en-US&page=1")
